@@ -15,18 +15,21 @@ public class PatientBST {
         root = null;
     }
 
-    public void insert(Patient patient) {
-        root = insertRec(root, patient);
+    public boolean insert(Patient patient) {
+        boolean[] inserted = {false};
+        root = insertRec(root, patient, inserted);
+        return inserted[0];
     }
 
-    private Node insertRec(Node node, Patient patient) {
+    private Node insertRec(Node node, Patient patient, boolean[] inserted) {
         if (node == null) {
+            inserted[0] = true;
             return new Node(patient);
         }
         if (patient.getPatientId() < node.patient.getPatientId()) {
-            node.left = insertRec(node.left, patient);
+            node.left = insertRec(node.left, patient, inserted);
         } else if (patient.getPatientId() > node.patient.getPatientId()) {
-            node.right = insertRec(node.right, patient);
+            node.right = insertRec(node.right, patient, inserted);
         } else {
         }
         return node;
